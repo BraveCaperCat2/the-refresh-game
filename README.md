@@ -1,2 +1,2 @@
 # The Refresh Game
-Refresh, Upgrade, Repeat
+Refresh, Upgrade, Repeat.
