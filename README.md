@@ -1,2 +1,2 @@
-# the-reload-game
-🔥 The Reload Game 🔥
+# The Refresh Game
+Refresh, Upgrade, Repeat
