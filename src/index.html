@@ -1592,7 +1592,6 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
                   thisCurrent.textContent = `Current interval: ${value.toFixed(1)}s`;
                 }
                 slider.value = gameState.autoUpgraderInterval.toString();
-                console.log(typeof gameState.autoUpgraderInterval);
                 sliderCurrent.textContent = `Current interval: ${gameState.autoUpgraderInterval.toFixed(1)}s`;
                 slider.max = "200.5";
                 slider.step = "0.5";
@@ -2157,7 +2156,7 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
           case 'auto-upgrade-max-tier':
             gameState.autoUpgraderMaxTier += 1;
             break;
-          case 'auto-upgrader-multiplier':
+          case 'auto-upgrade-multiplier':
             gameState.autoUpgraderUpgradeMultiplier += 1;
             break;
           case 'auto-refresh-unlock':
@@ -2519,7 +2518,7 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
         }
         gameState.totalScore += baseIncrement * criticalReloadMultiplier * multiplier;
         gameState.coins += baseIncrement * criticalReloadMultiplier * multiplier;
-        console.log(`Current coins: ${gameState.coins}`);
+        console.log('gameState', gameState); // Do not remove this line
       }
 
       function requestUserHandle() {
@@ -2628,7 +2627,6 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
           gameState.autoUpgrades.length = GG_ALL_GAME_CONFIG.autoUpgrades.length;
           gameState.autoUpgrades = [...gameState.autoUpgrades].map(value => value ?? 0);
           Refresh(1, false);
-          console.log('gameState', gameState); // Do not remove this line
           if (gameState.settingDarkMode) {
             document.body.classList.add('dark-mode');
           }
