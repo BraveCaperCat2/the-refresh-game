@@ -1229,7 +1229,7 @@
           autoRefresherInterval: 40,
           autoRefresherMinInterval: 40,
           autoRefresherRefreshMultiplier: 1,
-          autoRefresherCount: 0,
+          autoRefresherCount: 1,
           autoRefresherTimer: 0,
           autoRefresherEnabled: false,
           autoRebirtherUnlocked: false,
@@ -1741,9 +1741,12 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
           }
         }
         if (gameState.autoRefresherTimer >= gameState.autoRefresherInterval) {
+          if (gameState.autoRefresherCount < 1) {
+            gameState.autoRefresherCount = 1;
+          }
           gameState.autoRefresherTimer -= gameState.autoRefresherInterval;
           for (let i = 0; i < gameState.autoRefresherCount; i++) {
-            Refresh(gameState.autoRefresherRefresherMultiplier, true);
+            Refresh(gameState.autoRefresherRefreshMultiplier, true);
           }
         }
         if (gameState.autoRebirtherTimer >= gameState.autoRebirtherInterval) {
@@ -2208,6 +2211,7 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
           criticalReloadUnlocked: false,
           criticalReloadChance: 0,
           criticalReloadMultiplier: 1,
+          criticalReloadRepeats: 1,
           rebirths: gameState.rebirths + 1,
           bitcoins: gameState.bitcoins + Math.floor(gameState.bitcoinsPerRebirth * (maxBonus <= -1 ? Math.floor(coins / cost) : Math.min(Math.floor(coins / cost), maxBonus)) * multiplier),
           upgrades: Array(GG_ALL_GAME_CONFIG.upgrades.length).fill(0),
@@ -2505,11 +2509,11 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
             break;
           }
         }
-        const isCriticalReload = (criticalReloadRepeats > 1);
+        const isCriticalReload = (criticalReloadRepeats >= 1);
         const baseIncrement = gameState.coinsPerReload * gameState.coinsPerReloadMultiplier;
         if (isCriticalReload) {
           if (!automatic) {
-            showDialog(`Critical Refresh (x${gameState.criticalReloadMultiplier}^${criticalReloadRepeats} coins)`);
+            showDialog(`Critical Refresh (x${gameState.criticalReloadMultiplier}${criticalReloadRepeats > 2 ? `^${criticalReloadRepeats}` : ""} coins)`);
           }
           console.log('Critical Refresh!');
         }
