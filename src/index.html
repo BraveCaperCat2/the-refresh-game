@@ -2519,6 +2519,7 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
         }
         gameState.totalScore += baseIncrement * criticalReloadMultiplier * multiplier;
         gameState.coins += baseIncrement * criticalReloadMultiplier * multiplier;
+        console.log(`Current coins: ${gameState.coins}`);
       }
 
       function requestUserHandle() {
