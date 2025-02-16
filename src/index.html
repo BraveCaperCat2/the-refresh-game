@@ -2008,7 +2008,7 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
         });
         const coinsIncrement = Array.from(document.getElementsByClassName('coinsIncrement'));
         coinsIncrement.forEach(coinsIncrementDiv => {
-          coinsIncrementDiv.textContent = "$" + formatNumber(gameState.coinsPerReload, true) + " per refresh";
+          coinsIncrementDiv.textContent = "$" + formatNumber(gameState.coinsPerReload * gameState.coinsPerReloadMultiplier, true) + " per refresh";
         })
         const bitcoins = Array.from(document.getElementsByClassName('bitcoins'));
         bitcoins.forEach(bitcoinsDiv => {
