@@ -1900,6 +1900,9 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
         if (gameState.autoRebirtherInterval < gameState.autoRebirtherMinInterval) {
           gameState.autoRebirtherMinInterval = gameState.autoRebirtherInterval;
         }
+        if (gameState.autoUpgrades[4] > gameState.autoUpgraderUpgradeMultiplier - 1) {
+          gameState.autoUpgraderUpgradeMultiplier = gameState.autoUpgrades[4] + 1;
+        }
         GG_ALL_GAME_CONFIG.autoUpgrades.forEach((upgrade, index) => {
           if (gameState.tokens === null) {
             gameState.tokens = 0;
