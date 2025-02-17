@@ -810,7 +810,7 @@
             description: '+1% to get Critical Refresh (Currently value%)',
             baseCost: 20_000,
             costIncrease: 1.25,
-            max_level: 95,
+            max_level: 99999,
             rebirthsToUnlock: 2,
           },
           {
@@ -1420,7 +1420,7 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
 <div>${luckUpgrade.name}</div>
 <div id="luckUpgradeDescription${index + 1}">${luckUpgrade.description}</div>
 </div>
-<button id="luckUpgrade${index + 1}" onclick="buyLuckUpgrade(${index}, false)">Cost: ${luckUpgrade.id == "repeat" ? "₿" : "$"}${formatNumber(upgradeCost, gameState.settingLargeFormOnly)}</button>
+<button id="luckUpgrade${index + 1}" onclick="buyLuckUpgrade(${index}, false)">Cost: ${luckUpgrade.id == "repeat" ? "" : "$"}${formatNumber(upgradeCost, gameState.settingLargeFormOnly)}${luckUpgrade.id == "repeat" ? "₿" : ""}</button>
 `;
           if (gameState.rebirths < luckUpgrade.rebirthsToUnlock) {
             upgradeDiv.style.display = "none";
@@ -1791,7 +1791,6 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
           if (upgrade.id == "chance") {
             upgradeCost *= 2 ** gameState.criticalReloadRepeats;
           }
-          button.disabled = (gameState.coins < upgradeCost);
           if (maxLevelReached) {
             button.disabled = true;
             switch (maxLevel) {
@@ -1806,7 +1805,16 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
                 break;
             }
           } else {
-            button.textContent = `Cost: $${formatNumber(upgradeCost, gameState.settingLargeFormOnly)}`;
+            switch (upgrade.id) {
+              case 'repeat':
+                button.textContent = `Cost: ${formatNumber(upgradeCost, gameState.settingLargeFormOnly)}₿`;
+                button.disabled = (gameState.bitcoins < upgradeCost);
+                break;
+              default:
+                button.textContent = `Cost: $${formatNumber(upgradeCost, gameState.settingLargeFormOnly)}`;
+                button.disabled = (gameState.coins < upgradeCost);
+                break;
+              }
           }
           const upgradeDiv = document.getElementById(`luckUpgradeDiv${index + 1}`);
           if (gameState.criticalReloadUnlocked && upgrade.id != "repeat") {
@@ -1824,6 +1832,7 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
               break;
             case 'repeat':
               upgradeDescription.textContent = upgrade.description.replace('value', gameState.criticalReloadRepeats);
+              break;
           }
         });
         // rebirthUpgrades
@@ -2050,8 +2059,10 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
           upgradeCost *= 2 ** gameState.criticalReloadRepeats;
         }
         if (!override) {
-          if (gameState.coins < upgradeCost) return;
-          gameState.coins -= upgradeCost;
+          if (gameState.bitcoins < upgradeCost && upgrade.id == "chance") return;
+          if (gameState.coins < upgradeCost && upgrade.id != "chance") return;
+          if (upgrade.id == "chance") gameState.bitcoins -= upgradeCost;
+          if (upgrade.id != "chance") gameState.coins -= upgradeCost;
         }
         switch (upgrade.id) {
           case 'unlock':
@@ -2069,7 +2080,14 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
             gameState.criticalReloadRepeats += 1
         }
         gameState.luckUpgrades[upgradeIndex]++;
-        document.getElementById(`luckUpgrade${upgradeIndex + 1}`).textContent = `Cost: $${upgradeCost.toLocaleString("en-US")}`;
+        switch (upgrade.id) {
+          case 'repeat':
+            document.getElementById(`luckUpgrade${upgradeIndex + 1}`).textContent = `Cost: ${upgradeCost.toLocaleString("en-US")}₿`;
+            break;
+          default:
+            document.getElementById(`luckUpgrade${upgradeIndex + 1}`).textContent = `Cost: $${upgradeCost.toLocaleString("en-US")}`;
+            break;
+        }
         saveGame();
         updateScore();
       }
