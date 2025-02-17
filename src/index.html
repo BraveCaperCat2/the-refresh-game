@@ -1849,7 +1849,7 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
               } else {
                 description = upgrade.description.split("<br>").join()
               }
-              upgradeDescription.textContent = description.replace('value', formatNumber(Math.floor(rebirthBitcoins), gameState.settingLargeFormOnly)).replace('btc', (gameState.bitcoins), gameState.settingLargeFormOnly).replace('nextbtc', bitcoinPercentage).replace('btcper', formatNumber(gameState.bitcoinsPerRebirth, gameState.settingLargeFormOnly));
+              upgradeDescription.textContent = description.replace('value', formatNumber(Math.floor(rebirthBitcoins), gameState.settingLargeFormOnly)).replace('btc', (formatNumber(gameState.bitcoins, gameState.settingLargeFormOnly)), gameState.settingLargeFormOnly).replace('nextbtc', bitcoinPercentage).replace('btcper', formatNumber(gameState.bitcoinsPerRebirth, gameState.settingLargeFormOnly));
               break;
             case 'bitcoins-per-rebirth':
               let increment = Math.max(Math.floor(gameState.bitcoinsPerRebirth * 1.25), gameState.bitcoinsPerRebirth + 1) - gameState.bitcoinsPerRebirth;
