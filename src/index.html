@@ -1942,28 +1942,28 @@ ${changeNotes.changes.map(changenote => `<li class="changeNotesChange">${changen
               upgradeDescription.textContent = upgrade.description.replace('value', gameState.autoUpgraderMinInterval);
               break;
             case 'auto-upgrade-max-tier':
-              upgradeDescription.textContent = upgrade.description.replace('value', gameState.autoUpgraderMaxTier);
+              upgradeDescription.textContent = upgrade.description.replace('value', formatNumber(gameState.autoUpgraderMaxTier));
               break;
             case 'auto-upgrade-multiplier':
-              upgradeDescription.textContent = upgrade.description.replace('value', gameState.autoUpgraderUpgradeMultiplier);
+              upgradeDescription.textContent = upgrade.description.replace('value', formatNumber(gameState.autoUpgraderUpgradeMultiplier));
               break;
             case 'auto-refresh-interval':
               upgradeDescription.textContent = upgrade.description.replace('value', gameState.autoRefresherMinInterval);
               break;
             case 'auto-refresh-multiplier':
-              upgradeDescription.textContent = upgrade.description.replace('value', gameState.autoRefresherRefreshMultiplier);
+              upgradeDescription.textContent = upgrade.description.replace('value', formatNumber(gameState.autoRefresherRefreshMultiplier));
               break;
             case 'auto-refresh-count':
-              upgradeDescription.textContent = upgrade.description.replace('value', gameState.autoRefresherCount);
+              upgradeDescription.textContent = upgrade.description.replace('value', formatNumber(gameState.autoRefresherCount));
               break;
             case 'auto-rebirth-interval':
               upgradeDescription.textContent = upgrade.description.replace('value', gameState.autoRebirtherMinInterval);
               break;
             case 'auto-rebirth-multiplier':
-              upgradeDescription.textContent = upgrade.description.replace('value', gameState.autoRebirtherRebirthMultiplier);
+              upgradeDescription.textContent = upgrade.description.replace('value', formatNumber(gameState.autoRebirtherRebirthMultiplier));
               break;
             case 'auto-rebirth-max-bonus':
-              upgradeDescription.textContent = upgrade.description.replace('value', gameState.autoRebirtherMaxBonus);
+              upgradeDescription.textContent = upgrade.description.replace('value', formatNumber(gameState.autoRebirtherMaxBonus + 1));
               break;
           }
           const button = document.getElementById(`autoUpgrade${index + 1}`);
